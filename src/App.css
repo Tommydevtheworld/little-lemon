@@ -1,0 +1,24 @@
+/* src/App.css */
+/**
+ * Styles for the form container and input elements.
+ *
+ * The `.form-container` class sets a maximum width of 600 pixels and centers the form
+ * horizontally on the page. The `label`, `input`, and `button` elements are styled
+ * to have a width of 100% and some vertical spacing between them.
+ */
+.form-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}

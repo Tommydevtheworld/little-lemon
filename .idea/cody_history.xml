@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChatHistory">
+    <accountData>
+      <list>
+        <AccountData>
+          <accountId value="VXNlcjozNTcwMjg=" />
+          <chats>
+            <list>
+              <chat>
+                <internalId value="319fc1ad-081c-49c5-95ec-8c42ff6f281e" />
+                <llm>
+                  <llm>
+                    <model value="anthropic/claude-3-sonnet-20240229" />
+                    <provider value="Anthropic" />
+                    <title value="Claude 3 Sonnet" />
+                  </llm>
+                </llm>
+              </chat>
+              <chat>
+                <enhancedContext>
+                  <enhancedContext>
+                    <isEnabled value="false" />
+                  </enhancedContext>
+                </enhancedContext>
+                <internalId value="0b331817-45bb-417e-9065-ecb9a442f5e2" />
+                <llm>
+                  <llm>
+                    <model value="openai/gpt-4-turbo" />
+                    <provider value="OpenAI" />
+                    <title value="GPT-4 Turbo" />
+                  </llm>
+                </llm>
+                <messages>
+                  <list>
+                    <message>
+                      <speaker value="HUMAN" />
+                      <text value="using react   build a web app for the Little Lemon restaurant has: appropriate accessibility tags applied&#10;&#10; web app contain unit tests&#10;&#10; booking form functional and applying validation&#10;&#10; semantics and responsiveness of the web app correct&#10;&#10;" />
+                    </message>
+                    <message>
+                      <speaker value="ASSISTANT" />
+                      <text value="To build a web app for the Little Lemon restaurant using React, we'll focus on creating a booking form with appropriate accessibility, unit tests, validation, semantic HTML, and responsiveness. Below, I'll guide you through setting up the project, creating the booking form, applying accessibility and validation, and ensuring responsiveness.&#10;&#10;### Step 1: Setting Up the Project&#10;&#10;First, let's create a new React project using Create React App:&#10;&#10;```bash&#10;npx create-react-app little-lemon&#10;cd little-lemon&#10;```&#10;&#10;### Step 2: Adding Dependencies&#10;&#10;We'll need a few packages for form handling, validation, and testing:&#10;&#10;```bash&#10;npm install formik yup&#10;npm install --save-dev @testing-library/react @testing-library/jest-dom @testing-library/user-event&#10;```&#10;&#10;### Step 3: Creating the Booking Form Component&#10;&#10;Create a new component `BookingForm.js`:&#10;&#10;```jsx&#10;import React from 'react';&#10;import { Formik, Form, Field, ErrorMessage } from 'formik';&#10;import * as Yup from 'yup';&#10;&#10;const BookingSchema = Yup.object().shape({&#10;  name: Yup.string()&#10;    .min(2, 'Too Short!')&#10;    .max(50, 'Too Long!')&#10;    .required('Required'),&#10;  email: Yup.string()&#10;    .email('Invalid email')&#10;    .required('Required'),&#10;  date: Yup.date()&#10;    .required('Required'),&#10;  time: Yup.string()&#10;    .required('Required'),&#10;  guests: Yup.number()&#10;    .min(1, 'Must be at least one guest')&#10;    .required('Required')&#10;});&#10;&#10;const BookingForm = () =&gt; (&#10;  &lt;div&gt;&#10;    &lt;h1&gt;Book a Table&lt;/h1&gt;&#10;    &lt;Formik&#10;      initialValues={{&#10;        name: '',&#10;        email: '',&#10;        date: '',&#10;        time: '',&#10;        guests: ''&#10;      }}&#10;      validationSchema={BookingSchema}&#10;      onSubmit={(values, { setSubmitting }) =&gt; {&#10;        setTimeout(() =&gt; {&#10;          alert(JSON.stringify(values, null, 2));&#10;          setSubmitting(false);&#10;        }, 400);&#10;      }}&#10;    &gt;&#10;      {({ isSubmitting }) =&gt; (&#10;        &lt;Form aria-label=&quot;Booking form&quot;&gt;&#10;          &lt;label htmlFor=&quot;name&quot;&gt;Name&lt;/label&gt;&#10;          &lt;Field name=&quot;name&quot; type=&quot;text&quot; /&gt;&#10;          &lt;ErrorMessage name=&quot;name&quot; component=&quot;div&quot; /&gt;&#10;&#10;          &lt;label htmlFor=&quot;email&quot;&gt;Email&lt;/label&gt;&#10;          &lt;Field name=&quot;email&quot; type=&quot;email&quot; /&gt;&#10;          &lt;ErrorMessage name=&quot;email&quot; component=&quot;div&quot; /&gt;&#10;&#10;          &lt;label htmlFor=&quot;date&quot;&gt;Date&lt;/label&gt;&#10;          &lt;Field name=&quot;date&quot; type=&quot;date&quot; /&gt;&#10;          &lt;ErrorMessage name=&quot;date&quot; component=&quot;div&quot; /&gt;&#10;&#10;          &lt;label htmlFor=&quot;time&quot;&gt;Time&lt;/label&gt;&#10;          &lt;Field name=&quot;time&quot; type=&quot;time&quot; /&gt;&#10;          &lt;ErrorMessage name=&quot;time&quot; component=&quot;div&quot; /&gt;&#10;&#10;          &lt;label htmlFor=&quot;guests&quot;&gt;Number of Guests&lt;/label&gt;&#10;          &lt;Field name=&quot;guests&quot; type=&quot;number&quot; /&gt;&#10;          &lt;ErrorMessage name=&quot;guests&quot; component=&quot;div&quot; /&gt;&#10;&#10;          &lt;button type=&quot;submit&quot; disabled={isSubmitting}&gt;&#10;            Submit&#10;          &lt;/button&gt;&#10;        &lt;/Form&gt;&#10;      )}&#10;    &lt;/Formik&gt;&#10;  &lt;/div&gt;&#10;);&#10;&#10;export default BookingForm;&#10;```&#10;&#10;### Step 4: Adding Accessibility&#10;&#10;Ensure that all form elements have appropriate labels and are accessible. Use ARIA roles and properties where necessary. The `Formik` component setup already includes `id` and `htmlFor` attributes linking labels to inputs, which is a key accessibility feature.&#10;&#10;### Step 5: Creating Responsive Styles&#10;&#10;Add responsive CSS using CSS modules or styled-components. Here's an example using simple CSS:&#10;&#10;```css&#10;/* src/App.css */&#10;.form-container {&#10;  max-width: 600px;&#10;  margin: auto;&#10;  padding: 20px;&#10;}&#10;&#10;label {&#10;  display: block;&#10;  margin-bottom: 5px;&#10;}&#10;&#10;input, button {&#10;  width: 100%;&#10;  padding: 10px;&#10;  margin-bottom: 10px;&#10;}&#10;```&#10;&#10;### Step 6: Writing Unit Tests&#10;&#10;Create tests for your form using React Testing Library:&#10;&#10;```jsx&#10;// src/__tests__/BookingForm.test.js&#10;import React from 'react';&#10;import { render, fireEvent, waitFor } from '@testing-library/react';&#10;import BookingForm from '../BookingForm';&#10;&#10;test('form can be submitted', async () =&gt; {&#10;  const { getByLabelText, getByText } = render(&lt;BookingForm /&gt;);&#10;  fireEvent.change(getByLabelText(/name/i), { target: { value: 'John Doe' } });&#10;  fireEvent.change(getByLabelText(/email/i), { target: { value: 'john@example.com' } });&#10;  fireEvent.change(getByLabelText(/date/i), { target: { value: '2023-01-01' } });&#10;  fireEvent.change(getByLabelText(/time/i), { target: { value: '19:00' } });&#10;  fireEvent.change(getByLabelText(/number of guests/i), { target: { value: '4' } });&#10;&#10;  fireEvent.click(getByText(/submit/i));&#10;&#10;  await waitFor(() =&gt; {&#10;    expect(window.alert).toHaveBeenCalledWith(expect.stringContaining('John Doe'));&#10;  });&#10;});&#10;```&#10;&#10;### Step 7: Running the App and Tests&#10;&#10;Run your app and make sure everything works as expected:&#10;&#10;```bash&#10;npm start&#10;```&#10;&#10;Run your tests:&#10;&#10;```bash&#10;npm test&#10;```&#10;&#10;This setup provides a basic, accessible, and testable booking form for the Little Lemon restaurant. You can expand this by adding more features like a confirmation page, real-time availability checks, and more." />
+                    </message>
+                  </list>
+                </messages>
+                <updatedAt value="2024-06-09T22:33:57.745417789" />
+              </chat>
+              <chat>
+                <enhancedContext>
+                  <enhancedContext>
+                    <isEnabled value="false" />
+                  </enhancedContext>
+                </enhancedContext>
+                <internalId value="d3da6ff5-3a02-404b-8d01-31c944bacffc" />
+                <llm>
+                  <llm>
+                    <model value="openai/gpt-4-turbo" />
+                    <provider value="OpenAI" />
+                    <title value="GPT-4 Turbo" />
+                  </llm>
+                </llm>
+                <messages>
+                  <list>
+                    <message>
+                      <speaker value="HUMAN" />
+                      <text value="1.&#10;Question 1&#10;What should be done when presented with a technical problem where the solution is not immediately obvious?&#10;&#10;1 point&#10;&#10;Ask questions.&#10;&#10;&#10;Move the conversation along and try not to draw attention. &#10;&#10;&#10;Ask the interviewer how they would solve the problem.&#10;&#10;2.&#10;Question 2&#10;During a technical interview, is it better to rely on the work of others, or code everything yourself?&#10;&#10;1 point&#10;&#10;Use code written by others.&#10;&#10;&#10;Write as much code as you can to show off your skills.&#10;&#10;&#10;Use the data structures, but don’t use any other external implementation.&#10;&#10;3.&#10;Question 3&#10;Given an array that represents sock colors:  Sock_colors = [3,3,2,1,1,3,5,1,4,2], how many pairs of the same color socks exist?&#10;&#10;1 point&#10;&#10;4&#10;&#10;&#10;2&#10;&#10;&#10;3&#10;&#10;4.&#10;Question 4&#10;It is best to remain silent when writing code during a technical interview.&#10;&#10;1 point&#10;&#10;True&#10;&#10;&#10;False&#10;&#10;5.&#10;Question 5&#10;Should I ask questions in an interview?&#10;&#10;1 point&#10;&#10;Yes. Ask questions for clarity or during an appropriate time.&#10;&#10;&#10;Yes. Asking questions can run down the interview clock and so avoid awkward questions. &#10;&#10;&#10;Yes, but only when the conversation looks like it is going to help the interviewer along.&#10;&#10;6.&#10;Question 6&#10;What is the STAR method?&#10;&#10;1 point&#10;&#10;A structured approach to answering questions.  &#10;&#10;&#10;A stellar answer to a good question.&#10;&#10;&#10;A coding practice with 4 key components.&#10;&#10;7.&#10;Question 7&#10;What is meant by transfer rate in relation to a CPU?&#10;&#10;1 point&#10;&#10;The rate at which memory is transferred into cache.&#10;&#10;&#10;The rate at which instructions are processed.&#10;&#10;&#10;The rate at which a processor can convert input from a terminal. &#10;&#10;8.&#10;Question 8&#10;When engaged with a coding interview what sorts of tests should you aim to include?&#10;&#10;1 point&#10;&#10;Functional tests&#10;&#10;&#10;Integration tests&#10;&#10;&#10;Unit tests&#10;&#10;9.&#10;Question 9&#10;Which memory location is closest to the CPU?&#10;&#10;1 point&#10;&#10;Main memory&#10;&#10;&#10;Cache&#10;&#10;&#10;Secondary memory&#10;&#10;10.&#10;Question 10&#10;When designing a solution it is best to:&#10;&#10;1 point&#10;&#10;Tackle every problem as it arises.&#10;&#10;&#10;Doing a quick sketch then implementing everything on the page. &#10;&#10;&#10;Planning an outline, engaging the main obstacles, looking at the potential solutions and constantly reviewing.&#10;&#10;&#10;just answer" />
+                    </message>
+                    <message>
+                      <speaker value="ASSISTANT" />
+                      <text value="1. Ask questions.&#10;2. Use the data structures, but don’t use any other external implementation.&#10;3. 4&#10;4. False&#10;5. Yes. Ask questions for clarity or during an appropriate time.&#10;6. A structured approach to answering questions.&#10;7. The rate at which memory is transferred into cache.&#10;8. Unit tests&#10;9. Cache&#10;10. Planning an outline, engaging the main obstacles, looking at the potential solutions and constantly reviewing." />
+                    </message>
+                    <message>
+                      <speaker value="HUMAN" />
+                      <text value="1.&#10;Question 1&#10;What do TSV files use to separate their data?&#10;&#10;1 point&#10;&#10;Types&#10;&#10;&#10;Tabs &#10;&#10;&#10;Topic &#10;&#10;2.&#10;Question 2&#10;Arrays are always stored on the stack?&#10;&#10;1 point&#10;&#10;No&#10;&#10;&#10;Yes, but only through making a shallow-copy.&#10;&#10;&#10; Yes, but only through making a deep-copy.&#10;&#10;3.&#10;Question 3&#10;What happens when you try to retrieve a value using a number greater than the index size?&#10;&#10;1 point&#10;&#10;It would return a warning and a message indicating the issue. &#10;&#10;&#10; It would throw an error. &#10;&#10;&#10;Nothing. There would be nothing to retrieve so it would return null.&#10;&#10;4.&#10;Question 4&#10;In relation to computer science, what is a class?&#10;&#10;1 point&#10;&#10; It is a blueprint for an object. &#10;&#10;&#10;It is the thing from which arrays are build.&#10;&#10;&#10;An object that has functionality. &#10;&#10;5.&#10;Question 5&#10;In relation to objects, what are instance variables?&#10;&#10;1 point&#10;&#10; Characteristics of the class.&#10;&#10;&#10;Attributes that can take on many forms. &#10;&#10;&#10;An attribute that has an immediate impact when compiled. &#10;&#10;6.&#10;Question 6&#10;How many children can a node in a binary tree have?&#10;&#10;1 point&#10;&#10;4 &#10;&#10;&#10;2&#10;&#10;&#10;1&#10;&#10;7.&#10;Question 7&#10;Which of the following uses a FIFO approach. &#10;&#10;1 point&#10;&#10;Lists&#10;&#10;&#10;Queues &#10;&#10;&#10;Stacks&#10;&#10;8.&#10;Question 8&#10;In relation to data structures what does synchronization mean?&#10;&#10;1 point&#10;&#10;Relates to a measured way of increasing the size of an object.&#10;&#10;&#10;It is something to do with swimming. &#10;&#10;&#10;Making a class thread safe.&#10;&#10;9.&#10;Question 9&#10;Why do you need to implement a comparator when storing objects on a tree? &#10;&#10;1 point&#10;&#10;To ensure that values don’t clash when being added to a tree.&#10;&#10;&#10;So that the compiler can know to keep the tree balanced by comparing a number of nodes.  &#10;&#10;&#10;As a means of comparing objects so the tree knows which node to store an object on.&#10;&#10;10.&#10;Question 10&#10;Why are heaps called heaps? &#10;&#10;1 point&#10;&#10;The order of importance is determined by where in the data structure the information is found. &#10;&#10;&#10;The organization of their data is done in a very loose way, so it is said that the elements are heaped together. &#10;&#10;&#10;Because they store a selection of different data types. &#10;&#10;" />
+                    </message>
+                    <message>
+                      <speaker value="ASSISTANT" />
+                      <text value="1. Tabs&#10;2. No&#10;3. It would throw an error.&#10;4. It is a blueprint for an object.&#10;5. Characteristics of the class.&#10;6. 2&#10;7. Queues&#10;8. Making a class thread safe.&#10;9. As a means of comparing objects so the tree knows which node to store an object on.&#10;10. The organization of their data is done in a very loose way, so it is said that the elements are heaped together." />
+                    </message>
+                    <message>
+                      <speaker value="HUMAN" />
+                      <text value="1.&#10;Question 1&#10;Insertion sort is an example of divide and conquer?&#10;&#10;1 point&#10;&#10;True &#10;&#10;&#10;False&#10;&#10;2.&#10;Question 2&#10;Given an array of 6 numbers [6,8,19,48,9,90]and applying insertion sort, how many swaps must occur before the array is sorted?&#10;&#10;1 point&#10;&#10;6&#10;&#10;&#10;2 &#10;&#10;&#10;4&#10;&#10;3.&#10;Question 3&#10;What time complexity is required to do a linear search?&#10;&#10;1 point&#10;&#10;O(1)&#10;&#10;&#10;((log (n))&#10;&#10;&#10;O(n)&#10;&#10;4.&#10;Question 4&#10;Why do we need Big-O notation to evaluate our programs?&#10;&#10;1 point&#10;&#10;Because sorting is complicated, and we need a complicated metric. &#10;&#10;&#10; Because measuring time is relative to a person’s computer, so a relative metric is required. &#10;&#10;&#10;Because sorting requires that things are moved around to save space. &#10;&#10;5.&#10;Question 5&#10;What is parallelization?&#10;&#10;1 point&#10;&#10;It is about running code at the same time in threads or on separate computers. &#10;&#10;&#10;It is about calling functions repetitively until they have achieved a base case. &#10;&#10;&#10;It is about writing your code in one go. &#10;&#10;6.&#10;Question 6&#10;Why would you decide to use recursion?&#10;&#10;1 point&#10;&#10;Recursion reduces the pressure on the compiler by making less stack calls. &#10;&#10;&#10;It looks cool and makes your code seem more intelligent.&#10;&#10;&#10;It lends itself well to a divide and conquer approach.&#10;&#10;7.&#10;Question 7&#10;Why does Memoization work well with dynamic programming? &#10;&#10;1 point&#10;&#10;Because it takes a lot of memory to run some programs and memoization allows you to store data in smaller sizes.  &#10;&#10;&#10;It takes up less space in the hard drive. &#10;&#10;&#10;It requires less compiling because it stores previous results, reducing the load on the CPU. &#10;&#10;8.&#10;Question 8&#10;How are the principles of dynamic programming and greedy algorithms at odds with one another? &#10;&#10;1 point&#10;&#10;The greedy algorithm will use up CPU by monopolizing resources. &#10;&#10;&#10;The principle of dynamic programming is to exhaustively compute the best solution, while a greedy approach will favor take the immediate best option. &#10;&#10;&#10;Because dynamic programming will react with more agility to a program, while the greedy approach will be slower and more self-centered. &#10;&#10;9.&#10;Question 9&#10;Why is a binary search conducted in O(log n) time?&#10;&#10;1 point&#10;&#10;Because as it searches it sorts the elements.&#10;&#10;&#10;It is not, it is conducted in O(n). &#10;&#10;&#10;Regardless of the size of the input, at every step the number of calculations is halved.&#10;&#10;10.&#10;Question 10&#10;Fibonacci number&#10; In the Fibonacci pseudocode above how many recursive instances can be seen? &#10;&#10;1 point&#10;&#10;0&#10;&#10;&#10;1&#10;&#10;&#10;2" />
+                    </message>
+                    <message>
+                      <speaker value="ASSISTANT" />
+                      <text value="1. False&#10;2. 4&#10;3. O(n)&#10;4. Because measuring time is relative to a person’s computer, so a relative metric is required.&#10;5. It is about running code at the same time in threads or on separate computers.&#10;6. It lends itself well to a divide and conquer approach.&#10;7. It requires less compiling because it stores previous results, reducing the load on the CPU.&#10;8. The principle of dynamic programming is to exhaustively compute the best solution, while a greedy approach will favor taking the immediate best option.&#10;9. Regardless of the size of the input, at every step the number of calculations is halved.&#10;10. 2" />
+                    </message>
+                    <message>
+                      <speaker value="HUMAN" />
+                      <text value="Question 1&#10;What would you be expecting to demonstrate in your technical interview? &#10;&#10;1 point&#10;&#10;Your general background and hobbies? &#10;&#10;&#10;Your ability to code.&#10;&#10;&#10;Your softskills.&#10;&#10;2.&#10;Question 2&#10;How do computers store and represent information? &#10;&#10;1 point&#10;&#10;Binary &#10;&#10;&#10;HTML&#10;&#10;&#10;Java &#10;&#10;3.&#10;Question 3&#10;If an array of size 5, takes 5 computations before completing. It can be said that this has a Big-O of: &#10;&#10;1 point&#10;&#10;O(1) &#10;&#10;&#10;O(n)&#10;&#10;&#10;O(log(n))&#10;&#10;4.&#10;Question 4&#10;What is auxiliary space? &#10;&#10;1 point&#10;&#10;Space that is not really needed.  &#10;&#10;&#10;Additional space required to make computations.&#10;&#10;&#10;Luxury space that can be used for extravagances.&#10;&#10;5.&#10;Question 5&#10;In relation to data structures mutability refers to: &#10;&#10;1 point&#10;&#10;The initial limitations on the size that they can grow to.&#10;&#10;&#10;The use of one data structure as a container to mimic another.&#10;&#10;&#10;Whether a structure can be changed after its completion.&#10;&#10;6.&#10;Question 6&#10;To say that a list is an object infers what about this data structure? &#10;&#10;1 point&#10;&#10;That in addition to storing items it has its own in-built functions.  &#10;&#10;&#10;That it will need to have parameters configured before use.  &#10;&#10;&#10;That it can be defined by the attributes it contains.  &#10;&#10;7.&#10;Question 7&#10;True or false: During a coding interview, you should retain both used and unused code.&#10;&#10;1 point&#10;&#10;True &#10;&#10;&#10;False &#10;&#10;8.&#10;Question 8&#10;In relation to trees, what is the difference between a depth first and breadth first search? &#10;&#10;1 point&#10;&#10;A depth first will investigate nodes with greater detail, while a breadth first is more superficial in approach. &#10;&#10;&#10;A depth first approach will travel from top to bottom through sibling nodes, while a breadth first will travel through each level. &#10;&#10;&#10;A breadth first is more thorough so will return the result faster.  &#10;&#10;9.&#10;Question 9&#10;Which of the following statements are true? &#10;&#10;1 point&#10;&#10;A hash table decreases speed to decrease space usage &#10;&#10;&#10;A hash table decreases space usage to increase speed. &#10;&#10;&#10;A hash table increases space usage to increase speed. &#10;&#10;10.&#10;Question 10&#10;True or false: Dynamic programming is about using dynamic structures when coding.&#10;&#10;1 point&#10;&#10;True &#10;&#10;&#10;False &#10;&#10;" />
+                    </message>
+                    <message>
+                      <speaker value="ASSISTANT" />
+                      <text value="1. Your ability to code.&#10;2. Binary&#10;3. O(n)&#10;4. Additional space required to make computations.&#10;5. Whether a structure can be changed after its completion.&#10;6. That in addition to storing items it has its own in-built functions.&#10;7. False&#10;8. A depth first approach will travel from top to bottom through sibling nodes, while a breadth first will travel through each level.&#10;" />
+                    </message>
+                  </list>
+                </messages>
+                <updatedAt value="2024-06-09T22:46:41.375035179" />
+              </chat>
+              <chat>
+                <enhancedContext>
+                  <enhancedContext>
+                    <isEnabled value="false" />
+                  </enhancedContext>
+                </enhancedContext>
+                <internalId value="a9c322d8-7ca5-45fa-b258-a8bd4421985d" />
+                <llm>
+                  <llm>
+                    <model value="openai/gpt-4-turbo" />
+                    <provider value="OpenAI" />
+                    <title value="GPT-4 Turbo" />
+                  </llm>
+                </llm>
+              </chat>
+            </list>
+          </chats>
+          <defaultEnhancedContext>
+            <enhancedContext>
+              <isEnabled value="false" />
+            </enhancedContext>
+          </defaultEnhancedContext>
+          <defaultLlm>
+            <llm>
+              <model value="openai/gpt-4-turbo" />
+              <provider value="OpenAI" />
+              <title value="GPT-4 Turbo" />
+            </llm>
+          </defaultLlm>
+        </AccountData>
+      </list>
+    </accountData>
+  </component>
+</project>
